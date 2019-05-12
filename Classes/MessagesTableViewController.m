@@ -1125,6 +1125,8 @@
 	}
     NSLog(@"answerTopic isOK");
 
+    [self addMessageBottomSheetView];
+    /*
     HFRNavigationController *navigationController;
     
      {
@@ -1153,7 +1155,7 @@
     NSLog(@"answerTopic isOK 4");
 
 	[self presentModalViewController:navigationController animated:YES];
-    
+    */
 
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
@@ -1173,7 +1175,43 @@
 
 }
 
+- (void) addMessageBottomSheetView {
+    // Create controller
+    NewMessageViewController* addMessageViewController = [[NewMessageViewController alloc]
+                                                          initWithNibName:@"AddMessageViewController" bundle:nil];
+    addMessageViewController.delegate = self;
+    [addMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", [k ForumURL], topicAnswerUrl]];
+    addMessageViewController.title = @"Nouv. Réponse";
+    
+    [self addChildViewController:addMessageViewController];
+    [self.view addSubview:addMessageViewController.view];
+    
+    addMessageViewController.view.frame = CGRectMake(0, 200, self.view.bounds.size.width, self.view.bounds.size.height-200);
+    NSLog(@"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    NSLog(@"Frame creation:%d - bounds:%f,%f", 200, self.view.bounds.size.width, self.view.bounds.size.height);
+    NSLog(@"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
+    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRecognizer:)];
+    [panRecognizer setMinimumNumberOfTouches:1];
+    [panRecognizer setMaximumNumberOfTouches:1];
+    [addMessageViewController.view addGestureRecognizer:panRecognizer];
+}
+
+- (void) panRecognizer:(UIPanGestureRecognizer*) sender {
+    //let translation = recognizer.translationInView(self.view)
+    CGPoint translatedPoint = [sender translationInView:sender.view.superview];
+    NSLog(@"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    NSLog(@"TP:%2f - %2f", translatedPoint.x, translatedPoint.y);
+    NSLog(@"BEFORE Y:%f - size:%f,%f", sender.view.frame.origin.y,                     sender.view.frame.size.width, sender.view.frame.size.height);
+    NSLog(@"AFTER  Y:%f - size:%f,%f", sender.view.frame.origin.y + translatedPoint.y, sender.view.frame.size.width, sender.view.frame.size.height - translatedPoint.y);
+    NSLog(@"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+    sender.view.frame = CGRectMake(0, sender.view.frame.origin.y + translatedPoint.y, sender.view.frame.size.width, sender.view.frame.size.height);
+    //recognizer.setTranslation(CGPointZero, inView: self.view)
+    
+    //[sender.view setCenter:translatedPoint];
+    [sender setTranslation:CGPointZero inView:sender.view];
+}
 
 -(void)searchTopic {
 
