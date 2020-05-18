@@ -23,6 +23,7 @@
 @property NSMutableArray*  listInternalBlacklistPseudo;
 @property NSMutableArray*  listMPBlacklistPseudo;
 @property NSMutableArray*  listBookmarks;
+@property NSMutableArray*  listSuperFavorites;
 @property NSDictionary*    dicMPBlacklistPseudoTimestamp;
 @property NSDictionary*    dicFlags;
 @property NSDictionary*    dicProcessedFlag;
@@ -37,6 +38,9 @@
 - (void)loadBlackListAsynchronous;
 - (BOOL)addBlackListSynchronous:(NSString*)pseudo;
 - (BOOL)removeBlackListSynchronous:(NSString*)pseudo;
+- (BOOL)addSuperFavoriteSynchronous:(int)topicid;
+- (BOOL)removeSuperFavoriteSynchronous:(int)topicid;
+- (BOOL)isSuperFavorite:(int)topicid;
 - (BOOL)addBookmarkSynchronous:(Bookmark*)bookmark;
 - (BOOL)removeBookmarkSynchronous:(Bookmark*)bookmark;
 - (Bookmark*)getBookmarkForPost:(NSString*)sPost numreponse:(NSString*)sNumResponse;

@@ -143,65 +143,11 @@
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"dd/MM/yyyy à hh:mm"];
     NSString *theDate = [dateFormat stringFromDate:bookmark.dateBookmarkCreation];
-    [cell.labelDate setText:[NSString stringWithFormat:@"%@", theDate]];
+    [cell.labelDate setText:[NSString stringWithFormat:@"créé le %@", theDate]];
     
     [cell applyTheme];
     
     return cell;
-}
-
-- (void)handleLongPress:(UILongPressGestureRecognizer*)longPressRecognizer {
-    /*
-    if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
-        CGPoint longPressLocation = [longPressRecognizer locationInView:self.bookmarksTableView];
-        self.pressedIndexPath = [[self.bookmarksTableView indexPathForRowAtPoint:longPressLocation] copy];
-
-        if (topicActionAlert != nil) {
-            topicActionAlert = nil;
-        }
-        NSMutableArray *arrayActionsMessages = [NSMutableArray array];
-        [arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"la dernière page", @"lastPageAction", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
-        [arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"la page numéro...", @"chooseTopicPage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
-
-
-        topicActionAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        
-        for( NSDictionary *dico in arrayActionsMessages) {
-            [topicActionAlert addAction:[UIAlertAction actionWithTitle:[dico valueForKey:@"title"] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                if ([self respondsToSelector:NSSelectorFromString([dico valueForKey:@"code"])])
-                {
-                    //[self performSelector:];
-                    [self performSelectorOnMainThread:NSSelectorFromString([dico valueForKey:@"code"]) withObject:nil waitUntilDone:NO];
-                }
-                else {
-                    NSLog(@"CRASH not respondsToSelector %@", [dico valueForKey:@"code"]);
-                    
-                    [self performSelectorOnMainThread:NSSelectorFromString([dico valueForKey:@"code"]) withObject:nil waitUntilDone:NO];
-                }
-            }]];
-        }
-
-        CGPoint longPressLocation2 = [longPressRecognizer locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
-        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 1, 1);
-        
-        
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            // Can't use UIAlertActionStyleCancel in dark theme : https://stackoverflow.com/a/44606994/1853603
-            UIAlertActionStyle cancelButtonStyle = [[ThemeManager sharedManager] theme] == ThemeDark ? UIAlertActionStyleDefault : UIAlertActionStyleCancel;
-            [topicActionAlert addAction:[UIAlertAction actionWithTitle:@"Annuler" style:cancelButtonStyle handler:^(UIAlertAction *action) {
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }]];
-        } else {
-            // Required for UIUserInterfaceIdiomPad
-            topicActionAlert.popoverPresentationController.sourceView = [[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view];
-            topicActionAlert.popoverPresentationController.sourceRect = origFrame;
-            topicActionAlert.popoverPresentationController.backgroundColor = [ThemeColors alertBackgroundColor:[[ThemeManager sharedManager] theme]];
-        }
-        
-        [self presentViewController:topicActionAlert animated:YES completion:nil];
-        [[ThemeManager sharedManager] applyThemeToAlertController:topicActionAlert];
-        
-    }*/
 }
 
 -(void)tableView:(UITableView*)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath

@@ -23,7 +23,6 @@
     NSMutableArray *arrayCategoriesHidden;
     NSMutableArray *arrayCategoriesVisibleOrder;
     NSMutableArray *arrayCategoriesHiddenOrder;
-    NSMutableArray *idPostSuperFavorites;
 
 	MessagesTableViewController *messagesTableViewController;
     PullToRefreshErrorViewController *errorVC;
@@ -55,7 +54,6 @@
 @property (nonatomic, strong) NSMutableArray *arrayCategoriesHidden;
 @property (nonatomic, strong) NSMutableArray *arrayCategoriesVisibleOrder; // Ordre des catégories visibles: liste de Favorite.forum.aID (identifiant de catégorie)
 @property (nonatomic, strong) NSMutableArray *arrayCategoriesHiddenOrder; // Ordre des catégories masquées: liste de Favorite.forum.aID (identifiant de catégorie)
-@property (nonatomic, strong) NSMutableArray *idPostSuperFavorites;
 
 @property (nonatomic, strong) MessagesTableViewController *messagesTableViewController;
 @property (nonatomic, strong) PullToRefreshErrorViewController *errorVC;

@@ -25,7 +25,7 @@ NSString* const MP_SOURCE_NAME = @"iOS";
 
 @implementation MPStorage
 
-@synthesize bIsActive, bIsMPStorageSavedSuccessfully, sLastSucessAcessDate,dData, sPostId, sNumRep, listInternalBlacklistPseudo, listMPBlacklistPseudo, listBookmarks, dicMPBlacklistPseudoTimestamp, dicFlags, dicProcessedFlag, nbTopicId, targetViewController, didFinishReloadSelector;
+@synthesize bIsActive, bIsMPStorageSavedSuccessfully, sLastSucessAcessDate,dData, sPostId, sNumRep, listInternalBlacklistPseudo, listMPBlacklistPseudo, listSuperFavorites, listBookmarks, dicMPBlacklistPseudoTimestamp, dicFlags, dicProcessedFlag, nbTopicId, targetViewController, didFinishReloadSelector;
 static MPStorage *_shared = nil;    // static instance variable
 
 #pragma mark - Init methods
@@ -41,7 +41,7 @@ static MPStorage *_shared = nil;    // static instance variable
     if ( (self = [super init]) ) {
         // your custom initialization
         bIsActive = NO;
-        bIsMPStorageSavedSuccessfully = YES; // A startup, every thing is fine
+        bIsMPStorageSavedSuccessfully = YES; // A startup, we suppose every thing is fine
     }
     return self;
 }
@@ -52,64 +52,55 @@ static MPStorage *_shared = nil;    // static instance variable
 
 - (BOOL)initOrResetMP:(NSString*)pseudo fromView:(UIView*)view {
     bIsMPStorageSavedSuccessfully = YES; // Reset values
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"mpstorage_active"] && pseudo) {
-        NSMutableDictionary* dicMPStorage_postid = [[NSUserDefaults standardUserDefaults] objectForKey:@"dicMPStorage_postid"];
-        
-        if (dicMPStorage_postid == nil || [dicMPStorage_postid objectForKey:pseudo] == nil) {
-            // Find MP with title a2bcc09b796b8c6fab77058ff8446c34
-            if ([self findStorageMPFromPage:1] == NO) {
-                NSLog(@"MPStorage 1");
-                [HFRAlertView DisplayOKCancelAlertViewWithTitle:@"Stockage MP" andMessage:@"Le MP de stockage n'a pas été trouvé. Voulez-vous qu'il soit créé ?" handlerOK:^(UIAlertAction *action) {
-                    /* NOT WORKING
-                     UIActivityIndicatorView *spinner = nil;
-                    UIViewController* activeVC = [UIApplication sharedApplication].keyWindow.rootViewController;
-                    //if (activeVC.view) {
-                    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                    spinner.center = CGPointMake(160, 240);
-                    spinner.tag = 12;
-                    [activeVC.view addSubview:spinner];
-                    [spinner startAnimating];
-                        //[spinner release];
-                    //}
-                    */
-                    
-                    // Create empty structure
-                    if ([self createEmptyMPStorage] == NO) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"mpstorage_active"]) {
+        if (pseudo) {
+            NSMutableDictionary* dicMPStorage_postid = [[NSUserDefaults standardUserDefaults] objectForKey:@"dicMPStorage_postid"];
+            
+            if (dicMPStorage_postid == nil || [dicMPStorage_postid objectForKey:pseudo] == nil) {
+                // Find MP with title a2bcc09b796b8c6fab77058ff8446c34
+                if ([self findStorageMPFromPage:1] == NO) {
+                    NSLog(@"MPStorage 1");
+                    [HFRAlertView DisplayOKCancelAlertViewWithTitle:@"Stockage MP" andMessage:@"Le MP de stockage n'a pas été trouvé. Voulez-vous qu'il soit créé ?" handlerOK:^(UIAlertAction *action) {
+                        // Create empty structure
+                        if ([self createEmptyMPStorage] == NO) {
+                            self.bIsActive = NO;
+                            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"mpstorage_active"];
+                            return;
+                        }
+                        
+                        // Search again to find post ID
+                        if ([self findStorageMPFromPage:1] == NO) {
+                            [HFRAlertView DisplayOKAlertViewWithTitle:@"Oups !" andMessage:@"Failed to find MPStorage after its creation"];
+                            self.bIsActive = NO;
+                            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"mpstorage_active"];
+                            return;
+                        }
+                        
+                        self.bIsActive = YES;
+                        [[MPStorage shared] loadBlackListAsynchronous];
+                    }
+                    handlerCancel:^(UIAlertAction *action) {
                         self.bIsActive = NO;
                         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"mpstorage_active"];
                         return;
-                    }
-                    
-                    // Search again to find post ID
-                    if ([self findStorageMPFromPage:1] == NO) {
-                        [HFRAlertView DisplayOKAlertViewWithTitle:@"Oups !" andMessage:@"Failed to find MPStorage after its creation"];
-                        self.bIsActive = NO;
-                        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"mpstorage_active"];
-                        return;
-                    }
-                    
-                    self.bIsActive = YES;
-                    [[MPStorage shared] loadBlackListAsynchronous];
-                    /*
-                     if (spinner) {
-                        [spinner stopAnimating];
-                    }*/
+                    }];
+                    return NO;
                 }
-                handlerCancel:^(UIAlertAction *action) {
-                    self.bIsActive = NO;
-                    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"mpstorage_active"];
-                    return;
-                }];
-                return NO;
             }
+            else {
+                sPostId = [dicMPStorage_postid valueForKey:pseudo];
+            }
+            
+            [[MPStorage shared] loadBlackListAsynchronous];
+            return YES;
         }
-        else {
-            sPostId = [dicMPStorage_postid valueForKey:pseudo];
-        }
-        
-        [[MPStorage shared] loadBlackListAsynchronous];
-        return YES;
     }
+    
+    // Init SuperFavoris if it does not exist
+    if (![[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"SuperFavoritesIds"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:[[NSMutableArray alloc] init] forKey:@"SuperFavoritesIds"];
+    }
+
     return NO;
 }
 
@@ -279,6 +270,77 @@ static MPStorage *_shared = nil;    // static instance variable
     return NO;
 }
 
+#pragma mark - superfavorites
+- (void)updateSuperFavoriteUserDefaults {
+    [[NSUserDefaults standardUserDefaults] setObject:dData[@"data"][0][@"superFavs"][@"list"] forKey:@"SuperFavoritesIds"];
+}
+
+- (BOOL)isSuperFavorite:(int)topicid {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"mpstorage_active"]) {
+        return [dData[@"data"][0][@"superFavs"][@"list"] containsObject:[NSNumber numberWithInt:topicid]];
+    }
+    return [[[NSUserDefaults standardUserDefaults] arrayForKey:@"SuperFavoritesIds"] containsObject:[NSNumber numberWithInt:topicid]];
+}
+
+- (BOOL)addSuperFavoriteSynchronous:(int)topicid {
+    return [self modifySuperFavoriteSynchronous:topicid add:YES];
+}
+
+- (BOOL)removeSuperFavoriteSynchronous:(int)topicid {
+    return [self modifySuperFavoriteSynchronous:topicid add:NO];
+}
+
+- (BOOL)modifySuperFavoriteSynchronous:(int)topicid add:(BOOL)bAdd {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"mpstorage_active"]) {
+        // First get content of MPStorage to update it before modification
+        ASIHTTPRequest *request = [self GETRequest];
+        [request startSynchronous];
+        if (request) {
+            if ([request error]) {
+                NSLog(@"error: %@", [[request error] localizedDescription]);
+                return NO;
+            }
+            
+            if ([request responseString]) {
+                if (![self parseMPStorage:[request responseString]]) return NO;
+                
+                if (bAdd) {
+                    [dData[@"data"][0][@"superFavs"][@"list"] addObject:[NSNumber numberWithInt:topicid]];
+                }
+                else {
+                    [dData[@"data"][0][@"superFavs"][@"list"] removeObject:[NSNumber numberWithInt:topicid]];
+                }
+                [dData setValue:TIMESTAMP forKey:@"lastUpdate"];
+                [dData setValue:MP_SOURCE_NAME forKey:@"sourceName"];
+
+                if ([self saveMPStorageSynchronous]) {
+                    // Update settings
+                    [self updateSuperFavoriteUserDefaults];
+                    return YES;
+                }
+            }
+        }
+        return NO;
+    }
+    else {
+        // Remove SuperFav
+        if (!bAdd && [[[NSUserDefaults standardUserDefaults] arrayForKey:@"SuperFavoritesIds"] containsObject:[NSNumber numberWithInt:topicid]]) {
+            NSMutableArray* arr = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"SuperFavoritesIds"] mutableCopy];
+            [arr removeObject:[NSNumber numberWithInt:topicid]];
+            [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"SuperFavoritesIds"];
+            return YES;
+        }
+        // Or add SuperFav
+        else if (bAdd && ![[[NSUserDefaults standardUserDefaults] arrayForKey:@"SuperFavoritesIds"] containsObject:[NSNumber numberWithInt:topicid]]) {
+            NSMutableArray* arr = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"SuperFavoritesIds"] mutableCopy];
+            [arr addObject:[NSNumber numberWithInt:topicid]];
+            [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"SuperFavoritesIds"];
+            return YES;
+        }
+        return NO;
+    }
+}
+
 #pragma mark - add/remove bookmark
 
 - (BOOL)addBookmarkSynchronous:(Bookmark*)bookmark {
@@ -311,7 +373,8 @@ static MPStorage *_shared = nil;    // static instance variable
              // Not found, so it can be added
             if (indexFound == -1) {
                 // {"post":"96827","cat":"13","author":"Hansaplast","numreponse":59533822,"label":"Carafe","createDate":1587576009076}
-                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys: TIMESTAMP, @"createDate", bookmark.sPost, @"post", bookmark.sAuthorPost, @"author", bookmark.sNumResponse, @"numreponse", bookmark.sCat, @"cat", bookmark.sLabel, @"label", nil];
+                NSNumber* nNumreponse = [NSNumber numberWithInt:[bookmark.sNumResponse intValue]];
+                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys: TIMESTAMP, @"createDate", bookmark.sPost, @"post", bookmark.sAuthorPost, @"author", nNumreponse, @"numreponse", bookmark.sCat, @"cat", bookmark.sLabel, @"label", nil];
                 [dData[@"data"][0][@"bookmarks"][@"list"] insertObject:dict atIndex:0];
                 
                 [dData setValue:TIMESTAMP forKey:@"lastUpdate"];
@@ -590,7 +653,6 @@ static MPStorage *_shared = nil;    // static instance variable
     @finally {}
 }
 
-
 #pragma mark - MPstorage general handling methods
 
 // Method to find the MPStorage in the current MPs page
@@ -787,7 +849,8 @@ static MPStorage *_shared = nil;    // static instance variable
     }
     @finally {}
     
-    [[MPStorage shared] parseBookmarks];
+    [self parseBookmarks];
+    [self updateSuperFavoriteUserDefaults];
     [self updateLastSucessAcessDate];
     return YES;
 }

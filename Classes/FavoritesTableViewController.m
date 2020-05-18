@@ -38,6 +38,7 @@
 #import "OfflineStorage.h"
 #import "MultisManager.h"
 #import "FilterPostsQuotes.h"
+#import "MPStorage.h"
 
 #define SECTION_CAT_VISIBLE 0
 #define SECTION_CAT_HIDDEN 1
@@ -47,7 +48,6 @@
 @synthesize pressedIndexPath, favoritesTableView, loadingView, showAll;
 @synthesize arrayData, arrayNewData, arrayTopics, arrayCategories, arrayCategoriesHidden, arrayCategoriesVisibleOrder, arrayCategoriesHiddenOrder; //v2 remplace arrayData, arrayDataID, arrayDataID2, arraySection
 @synthesize messagesTableViewController, errorVC;
-@synthesize idPostSuperFavorites;
 @synthesize request;
 @synthesize reloadOnAppear, status, statusMessage, maintenanceView, topicActionAlert, filterPostsQuotes;
 
@@ -185,20 +185,25 @@
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-	
-	[self loadDataInTableView:[theRequest responseData]];
-	
-    [self.arrayData removeAllObjects];
-    //[self.arrayTopics removeAllObjects];
+    @try {
+        [self loadDataInTableView:[theRequest responseData]];
+        
+        [self.arrayData removeAllObjects];
+        //[self.arrayTopics removeAllObjects];
 
-    self.arrayData = [NSMutableArray arrayWithArray:self.arrayNewData];
-    
-    [self.arrayNewData removeAllObjects];
-    
-	[self.favoritesTableView reloadData];
-    
-    [self.favoritesTableView.pullToRefreshView stopAnimating];
-    [self.favoritesTableView.pullToRefreshView setLastUpdatedDate:[NSDate date]];
+        self.arrayData = [NSMutableArray arrayWithArray:self.arrayNewData];
+        
+        [self.arrayNewData removeAllObjects];
+        
+        [self.favoritesTableView reloadData];
+        
+        [self.favoritesTableView.pullToRefreshView stopAnimating];
+        [self.favoritesTableView.pullToRefreshView setLastUpdatedDate:[NSDate date]];
+    }
+    @catch(NSException* e) {
+        [self fetchContentFailed:theRequest];
+    }
+    @finally {}
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
@@ -652,15 +657,7 @@
         // If not, create en empty array
         self.arrayCategoriesHiddenOrder = [[NSMutableArray alloc] init];
     }
-    
-    // Get Ids super favorites if presents
-    if ([[[defaults dictionaryRepresentation] allKeys] containsObject:@"SuperFavoritesIds"]) {
-        self.idPostSuperFavorites = [[defaults arrayForKey:@"SuperFavoritesIds"] mutableCopy];
-    } else {
-        // If not, create en empty array
-        self.idPostSuperFavorites = [[NSMutableArray alloc] init];
-    }
-    
+        
 	self.statusMessage = [[NSString alloc] init];
 	
 	//NSLog(@"viewDidLoad %d", self.arrayDataID.count);
@@ -1107,7 +1104,8 @@
             NSLog(@"Topic sans cat, row=%ld",indexPath.row);
         }
 
-        if ([self.idPostSuperFavorites containsObject:[NSNumber numberWithInt:tmpTopic.postID]]) {
+        
+        if ([[MPStorage shared] isSuperFavorite:tmpTopic.postID]) {
             cell.isSuperFavorite = YES;
         } else {
             cell.isSuperFavorite = NO;
@@ -1417,10 +1415,11 @@
         UIAlertAction* uiAction = [UIAlertAction actionWithTitle:@"Super favori" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [self setTopicSuperFavoriteWithIndex:self.pressedIndexPath];
         }];
-        if ([self.idPostSuperFavorites containsObject:[NSNumber numberWithInt:tmpTopic.postID]])
-        {
+        
+        if ([[MPStorage shared] isSuperFavorite:tmpTopic.postID]) {
             [uiAction setValue:@true forKey:@"checked"];
         }
+        
         [topicActionAlert addAction:uiAction];
         
         // Offline favorites handling
@@ -1614,20 +1613,21 @@
     [self.favoritesTableView setEditing:NO animated:NO];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"mpstorage_active"]) {
+        }
         // Go to URL in BG
-        if ([self.idPostSuperFavorites containsObject:[NSNumber numberWithInt:tmpTopic.postID]])
-        {
+        if ([[MPStorage shared] isSuperFavorite:tmpTopic.postID])  {
             NSLog(@"Topic is NO more favorite %d", tmpTopic.postID);
-            [self.idPostSuperFavorites removeObject:[NSNumber numberWithInt:tmpTopic.postID]];
-            tmpTopic.isSuperFavorite = NO;
+            if ([[MPStorage shared] removeSuperFavoriteSynchronous:tmpTopic.postID]) {
+                tmpTopic.isSuperFavorite = NO;
+            }
         }
-        else
-        {
+        else {
             NSLog(@"Topic is super favorite %d", tmpTopic.postID);
-            [self.idPostSuperFavorites addObject:[NSNumber numberWithInt:tmpTopic.postID]];
-            tmpTopic.isSuperFavorite = YES;
+            if ([[MPStorage shared] addSuperFavoriteSynchronous:tmpTopic.postID]) {
+                tmpTopic.isSuperFavorite = YES;
+            }
         }
-        [[NSUserDefaults standardUserDefaults] setObject:self.idPostSuperFavorites forKey:@"SuperFavoritesIds"];
         [self.favoritesTableView reloadData];
     });
 }
