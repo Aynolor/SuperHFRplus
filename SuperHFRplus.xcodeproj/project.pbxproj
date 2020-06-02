@@ -60,6 +60,11 @@
 		1572FC4D22F3826100D40789 /* icons8-reset-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 1572FC4C22F3826100D40789 /* icons8-reset-50.png */; };
 		1572FC4F22F384AA00D40789 /* reset-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 1572FC4E22F384AA00D40789 /* reset-512.png */; };
 		158D498B2240618C00AFDBDE /* 08-chat-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 158D498A2240618C00AFDBDE /* 08-chat-20@2x.png */; };
+		1590374324838B55001D65E1 /* gif.png in Resources */ = {isa = PBXBuildFile; fileRef = 1590374124838B54001D65E1 /* gif.png */; };
+		1590374424838B55001D65E1 /* gif@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1590374224838B55001D65E1 /* gif@2x.png */; };
+		1590374624841BA6001D65E1 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 1590374524841BA5001D65E1 /* Cartfile */; };
+		159037482484207B001D65E1 /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 159037472484207A001D65E1 /* Cartfile.resolved */; };
+		1590374A24866D5C001D65E1 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 1590374924866D5C001D65E1 /* Podfile */; };
 		15960FE522F6147B006BBD34 /* MPStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 15960FE422F6147B006BBD34 /* MPStorage.m */; };
 		159CE15024801E1500BC17DA /* SmileyCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 159CE14F24801E1500BC17DA /* SmileyCache.m */; };
 		15A1238D22D659CB00C3DFEC /* Heart-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A1238C22D659CB00C3DFEC /* Heart-20.png */; };
@@ -85,6 +90,7 @@
 		15EBFD152206211500A37CED /* AQCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15EBFD142206211500A37CED /* AQCellView.xib */; };
 		15F4F46222F1D1F100A7AC97 /* ThemeBrightnessCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15F4F46122F1D1F100A7AC97 /* ThemeBrightnessCellView.xib */; };
 		15F4F46522F1D32F00A7AC97 /* ThemeBrightnessCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F4F46422F1D32F00A7AC97 /* ThemeBrightnessCellView.m */; };
+		4BDD11EFE04900FD330173BE /* Pods_SuperHFRplus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B79BAAC228D336B644B1B5FC /* Pods_SuperHFRplus.framework */; };
 		4C0031241BD01CE700F87F13 /* HFRTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0031221BD01CE700F87F13 /* HFRTabBar.m */; };
 		4C00313E1BD0404500F87F13 /* UIWebView+FLUIWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C00313A1BD0404500F87F13 /* UIWebView+FLUIWebView.m */; };
 		4C0031401BD0404500F87F13 /* WKWebView+FLWKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C00313C1BD0404500F87F13 /* WKWebView+FLWKWebView.m */; };
@@ -742,6 +748,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		013DFB85B857DB8985CA2204 /* Pods-SuperHFRplus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperHFRplus.debug.xcconfig"; path = "Target Support Files/Pods-SuperHFRplus/Pods-SuperHFRplus.debug.xcconfig"; sourceTree = "<group>"; };
 		013F0DB4121E0E8700BEBEB1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		013F0E95121E117800BEBEB1 /* LinkItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LinkItem.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		013F0E96121E117800BEBEB1 /* LinkItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LinkItem.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -868,6 +875,11 @@
 		1572FC4C22F3826100D40789 /* icons8-reset-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-reset-50.png"; sourceTree = "<group>"; };
 		1572FC4E22F384AA00D40789 /* reset-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reset-512.png"; sourceTree = "<group>"; };
 		158D498A2240618C00AFDBDE /* 08-chat-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "08-chat-20@2x.png"; path = "SuperHFRplus/Assets/UI/08-chat-20@2x.png"; sourceTree = SOURCE_ROOT; };
+		1590374124838B54001D65E1 /* gif.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gif.png; sourceTree = "<group>"; };
+		1590374224838B55001D65E1 /* gif@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gif@2x.png"; sourceTree = "<group>"; };
+		1590374524841BA5001D65E1 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		159037472484207A001D65E1 /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
+		1590374924866D5C001D65E1 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		15960FE322F6146B006BBD34 /* MPStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPStorage.h; sourceTree = "<group>"; };
 		15960FE422F6147B006BBD34 /* MPStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPStorage.m; sourceTree = "<group>"; };
 		159CE14E24801DFA00BC17DA /* SmileyCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmileyCache.h; sourceTree = "<group>"; };
@@ -1173,6 +1185,8 @@
 		4CD6B8B81B97AEF5007FC29E /* 6-Camera-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "6-Camera-32.png"; sourceTree = "<group>"; };
 		4CFC38531FB0E6720027A832 /* SuperHFRplus-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SuperHFRplus-Bridging-Header.h"; sourceTree = "<group>"; };
 		4CFC38561FB0E6BE0027A832 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		855538A60618AE03F94291EB /* Pods-SuperHFRplus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperHFRplus.release.xcconfig"; path = "Target Support Files/Pods-SuperHFRplus/Pods-SuperHFRplus.release.xcconfig"; sourceTree = "<group>"; };
+		B79BAAC228D336B644B1B5FC /* Pods_SuperHFRplus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperHFRplus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA00C3E417C2FE1B0067B457 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		CA00C3E517C2FE1B0067B457 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		CA00C43A17C2FF3F0067B457 /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLNode.h; sourceTree = "<group>"; };
@@ -1684,6 +1698,7 @@
 				CA7C712D185EF50E00B348BA /* libsqlite3.dylib in Frameworks */,
 				CA7C712E185EF50E00B348BA /* libz.dylib in Frameworks */,
 				D87BB73C21624AEC0079690C /* SimpleKeychain.framework in Frameworks */,
+				4BDD11EFE04900FD330173BE /* Pods_SuperHFRplus.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1998,6 +2013,10 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				ACDD67CECE4A43960FA75EDE /* Pods */,
+				1590374524841BA5001D65E1 /* Cartfile */,
+				159037472484207A001D65E1 /* Cartfile.resolved */,
+				1590374924866D5C001D65E1 /* Podfile */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -2038,6 +2057,7 @@
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				013F0DB4121E0E8700BEBEB1 /* QuartzCore.framework */,
 				CA18B160126245AB008B8466 /* AssetsLibrary.framework */,
+				B79BAAC228D336B644B1B5FC /* Pods_SuperHFRplus.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2319,6 +2339,15 @@
 			);
 			name = MenuItem;
 			path = iOS7;
+			sourceTree = "<group>";
+		};
+		ACDD67CECE4A43960FA75EDE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				013DFB85B857DB8985CA2204 /* Pods-SuperHFRplus.debug.xcconfig */,
+				855538A60618AE03F94291EB /* Pods-SuperHFRplus.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		CA00C35417C2FC620067B457 /* SuperHFRplus */ = {
@@ -2611,6 +2640,8 @@
 		CA00C5A217C30C370067B457 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				1590374124838B54001D65E1 /* gif.png */,
+				1590374224838B55001D65E1 /* gif@2x.png */,
 				155A992224771681002968CD /* photogallery@2x.png */,
 				155A992324771682002968CD /* photogallery2.png */,
 				CA7472D317E14D4500B45E15 /* iOS7 */,
@@ -2922,6 +2953,7 @@
 				CA63F38D185EC18B0092E9F9 /* RehostCell.xib */,
 				013F0E9F121E117900BEBEB1 /* AddMessageViewController.h */,
 				013F0EA0121E117900BEBEB1 /* AddMessageViewController.m */,
+				013F0EA3121E117900BEBEB1 /* AddMessageViewController.xib */,
 				013F0EA1121E117900BEBEB1 /* QuoteMessageViewController.h */,
 				013F0EA2121E117900BEBEB1 /* QuoteMessageViewController.m */,
 				CA81D28B12281D5800AC6ADA /* EditMessageViewController.h */,
@@ -2930,7 +2962,6 @@
 				CAAFAFDB125E2A58001B90EC /* NewMessageViewController.m */,
 				4CC3C74E1B99BB6F001B8632 /* DeleteMessageViewController.h */,
 				4CC3C74F1B99BB6F001B8632 /* DeleteMessageViewController.m */,
-				013F0EA3121E117900BEBEB1 /* AddMessageViewController.xib */,
 				CAF03C551245612800897C3B /* AccessoryView.xib */,
 				4C21E9811BA5CC1200691D65 /* HFRTextView.h */,
 				4C21E9821BA5CC1200691D65 /* HFRTextView.m */,
@@ -3090,10 +3121,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA7C712F185EF50E00B348BA /* Build configuration list for PBXNativeTarget "SuperHFRplus" */;
 			buildPhases = (
+				2696E4BD1959024899636056 /* [CP] Check Pods Manifest.lock */,
 				CA7C6FA4185EF50E00B348BA /* Resources */,
 				CA7C70B9185EF50E00B348BA /* Sources */,
 				CA7C711D185EF50E00B348BA /* Frameworks */,
 				4CFB848B1FB4BC6F0014BE6D /* ShellScript */,
+				4006D1C98903454430415B26 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3137,6 +3170,7 @@
 				de,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -3330,6 +3364,7 @@
 				CA7C7007185EF50E00B348BA /* AddMessageViewController.xib in Resources */,
 				CA7C7008185EF50E00B348BA /* buttonnexton.png in Resources */,
 				CA7C7009185EF50E00B348BA /* downsmall7@2x.png in Resources */,
+				1590374624841BA6001D65E1 /* Cartfile in Resources */,
 				4CB132FF1B90B7060081B44D /* ThorHammer-20@2x.png in Resources */,
 				CAF5DB771933D422000B5215 /* ConfigurationViewController.xib in Resources */,
 				4C9C2B911BAE801700511853 /* BugFilled-25.png in Resources */,
@@ -3359,6 +3394,7 @@
 				4C0B8DD31BA4522900D329BA /* CameraFilled-40@2x.png in Resources */,
 				CA7C7016185EF50E00B348BA /* mouais.gif in Resources */,
 				CA7C7017185EF50E00B348BA /* spamafote.gif in Resources */,
+				1590374A24866D5C001D65E1 /* Podfile in Resources */,
 				15AEFA03223E918F005E6739 /* Icon-WHITE@2x.png in Resources */,
 				4C21E9761BA5C70400691D65 /* StrikethroughFilled-20.png in Resources */,
 				CA7C7018185EF50E00B348BA /* buttonendoff@2x.png in Resources */,
@@ -3425,6 +3461,7 @@
 				CA7C7035185EF50E00B348BA /* multipleflag1.gif in Resources */,
 				CA7C7036185EF50E00B348BA /* blank15.gif in Resources */,
 				1543743522EC672F00AF00A5 /* ColorPickerViewController.xib in Resources */,
+				1590374424838B55001D65E1 /* gif@2x.png in Resources */,
 				CA7C7037185EF50E00B348BA /* unselectedrow@2x.png in Resources */,
 				4C0B8DF71BA4526100D329BA /* BoldFilled-20.png in Resources */,
 				CA7C7038185EF50E00B348BA /* bic.gif in Resources */,
@@ -3566,6 +3603,7 @@
 				4CD6B8871B979713007FC29E /* CancelFilled-20@2x.png in Resources */,
 				4C444AF51BB0DE0D000EF444 /* LaunchLogo@2x.png in Resources */,
 				4C0B8DDF1BA4522900D329BA /* SmartphoneTabletFilled-40.png in Resources */,
+				159037482484207B001D65E1 /* Cartfile.resolved in Resources */,
 				D8DDF2B31E58810A002F1484 /* ToolBarPlay_on_tinted@2x.png in Resources */,
 				D8B4EDF021C184970042C392 /* snow5.png in Resources */,
 				CA7C7080185EF50E00B348BA /* ToolBarFastForward_off.png in Resources */,
@@ -3670,6 +3708,7 @@
 				4C0B8DBB1BA4522900D329BA /* ChatFilled-40@2x.png in Resources */,
 				4C0B8DA91BA4522900D329BA /* BroadcastingFilled-40@2x.png in Resources */,
 				CA7C70AC185EF50E00B348BA /* smileybase.html in Resources */,
+				1590374324838B55001D65E1 /* gif.png in Resources */,
 				4C0B8DB11BA4522900D329BA /* VOIPGatewayFilled-40@2x.png in Resources */,
 				CA7C70AD185EF50E00B348BA /* up@2x.png in Resources */,
 				CA7C70AE185EF50E00B348BA /* ToolBarFastForward_on.png in Resources */,
@@ -3703,6 +3742,50 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2696E4BD1959024899636056 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SuperHFRplus-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4006D1C98903454430415B26 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SuperHFRplus/Pods-SuperHFRplus-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DeepDiff/DeepDiff.framework",
+				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
+				"${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeepDiff.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libwebp.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SuperHFRplus/Pods-SuperHFRplus-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4CFB848B1FB4BC6F0014BE6D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4008,6 +4091,7 @@
 		};
 		CA7C7130185EF50E00B348BA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 013DFB85B857DB8985CA2204 /* Pods-SuperHFRplus.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Classic-Red";
@@ -4057,6 +4141,7 @@
 		};
 		CA7C7131185EF50E00B348BA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 855538A60618AE03F94291EB /* Pods-SuperHFRplus.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Classic-Red";

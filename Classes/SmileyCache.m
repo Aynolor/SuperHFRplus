@@ -16,6 +16,9 @@
 
 #define IMAGE_CACHE_MAX_ELEMENTS 1000
 
+@implementation SmileyRequest
+@end
+
 @implementation SmileyCache
 
 @synthesize arrCurrentSmileyArray, cacheSmileys;
@@ -42,6 +45,10 @@ static SmileyCache *_shared = nil;    // static instance variable
 - (void)handleSmileyArray:(NSMutableArray*)arrSmileys forCollection:(UICollectionView*) cv
 {
     self.arrCurrentSmileyArray = [arrSmileys mutableCopy];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [cv reloadData];
+    });
+
     BOOL bHasbeenReloaded = NO;
     for (int i = 0; i < self.arrCurrentSmileyArray.count; i++) {
         NSString *filename = [[[self.arrCurrentSmileyArray objectAtIndex:i] objectForKey:@"source"] stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
@@ -57,6 +64,7 @@ static SmileyCache *_shared = nil;    // static instance variable
         else {
             NSLog(@"Image ERROOOR loading (%d) : %@", i, filename);
         }
+
         // Says VC that cell can be reloaded
         /*
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -68,7 +76,9 @@ static SmileyCache *_shared = nil;    // static instance variable
                 [cv reloadItemsAtIndexPaths:ipa2];
             }
         });*/
-        if (!bHasbeenReloaded && i >= 12) {
+        
+        // TODO: add a way to stop loading. Like when closing the smiley panel.
+        if (!bHasbeenReloaded && i >= 25) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [cv reloadData];
             });
@@ -92,5 +102,13 @@ static SmileyCache *_shared = nil;    // static instance variable
     NSLog(@"getImageForIndex %d", index);
     return img;
 }
+
+- (NSMutableArray*) getSmileyListForText:(NSString*)sTextSmileys
+{
+    NSMutableArray* arr = [self.cacheSmileyRequests objectForKey:sTextSmileys];
+    NSLog(@"getSmileyListForText %@", arr);
+    return arr;
+}
+
 
 @end

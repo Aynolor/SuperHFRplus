@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,11 +11,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddMessageViewController">
             <connections>
                 <outlet property="accessoryView" destination="49" id="50"/>
+                <outlet property="btnToolbarGIF" destination="c6s-Pv-exP" id="LzC-Ic-NjZ"/>
                 <outlet property="btnToolbarImage" destination="udE-9S-m7E" id="Rz0-MG-vte"/>
                 <outlet property="btnToolbarRedo" destination="6dI-f5-1x2" id="QIk-V2-5Qa"/>
                 <outlet property="btnToolbarSmiley" destination="5xY-k7-iVI" id="G0x-Vk-TkH"/>
                 <outlet property="btnToolbarUndo" destination="g2R-uw-wg6" id="T6R-2x-Lak"/>
                 <outlet property="collectionImages" destination="Kge-o4-GJe" id="VEV-ws-Gdw"/>
+                <outlet property="collectionSmileys" destination="0dW-vp-h3E" id="N5V-br-UvD"/>
                 <outlet property="collectionSmileysDefault" destination="0dW-vp-h3E" id="PsY-YL-Vf4"/>
                 <outlet property="commonTableView" destination="75" id="78"/>
                 <outlet property="loadingView" destination="65" id="68"/>
@@ -26,6 +28,7 @@
                 <outlet property="segmentControlerPage" destination="72" id="74"/>
                 <outlet property="selectCompte" destination="sR2-lo-g8U" id="Mwt-33-Kyf"/>
                 <outlet property="smileView" destination="SvM-lI-LQX" id="XUX-1L-Qn7"/>
+                <outlet property="spinnerSmileys" destination="3gf-gU-Igu" id="3Wi-Wu-uVU"/>
                 <outlet property="textFieldSmileys" destination="69" id="71"/>
                 <outlet property="textView" destination="62" id="64"/>
                 <outlet property="view" destination="1" id="3"/>
@@ -119,10 +122,10 @@
                             </connections>
                         </segmentedControl>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Smiley" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="69">
-                            <rect key="frame" x="83" y="535" width="100" height="26"/>
+                            <rect key="frame" x="114" y="535" width="80" height="26"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="26" id="KSe-6v-KjF"/>
-                                <constraint firstAttribute="width" constant="100" id="kSz-Un-goG"/>
+                                <constraint firstAttribute="width" constant="80" id="kSz-Un-goG"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search"/>
@@ -141,7 +144,7 @@
                             <state key="normal" image="photogallery.png"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5xY-k7-iVI" userLabel="Button Smiley">
-                            <rect key="frame" x="48" y="538" width="20" height="20"/>
+                            <rect key="frame" x="79" y="538" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="EE9-Fq-JJ9"/>
                                 <constraint firstAttribute="width" constant="20" id="nhy-XD-u08"/>
@@ -149,7 +152,7 @@
                             <state key="normal" image="redface.png"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dI-f5-1x2" userLabel="Button Redo">
-                            <rect key="frame" x="243" y="538" width="20" height="20"/>
+                            <rect key="frame" x="248" y="538" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="9dO-Wd-rwe"/>
                                 <constraint firstAttribute="width" constant="20" id="PmA-3Q-i9F"/>
@@ -157,7 +160,7 @@
                             <state key="normal" image="undo.png"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2R-uw-wg6" userLabel="Button Undo">
-                            <rect key="frame" x="208" y="538" width="20" height="20"/>
+                            <rect key="frame" x="218" y="538" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="20" id="Aa3-iE-4hV"/>
                                 <constraint firstAttribute="height" constant="20" id="QBw-EY-3YK"/>
@@ -225,36 +228,56 @@
                                 <outlet property="delegate" destination="-1" id="6LL-ER-wad"/>
                             </connections>
                         </collectionView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c6s-Pv-exP">
+                            <rect key="frame" x="47" y="539" width="20" height="18"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="6a3-XN-2q7"/>
+                                <constraint firstAttribute="height" constant="18" id="iww-gP-BdH"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="2"/>
+                            <state key="normal" image="gif.png"/>
+                        </button>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="3gf-gU-Igu">
+                            <rect key="frame" x="170" y="538" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="BRW-YT-XpY"/>
+                                <constraint firstAttribute="width" constant="20" id="rxa-xZ-rM0"/>
+                            </constraints>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="5xY-k7-iVI" secondAttribute="bottom" constant="10" id="1WS-73-2Qv"/>
-                        <constraint firstItem="6dI-f5-1x2" firstAttribute="leading" secondItem="g2R-uw-wg6" secondAttribute="trailing" constant="15" id="7eK-Lk-QE5"/>
+                        <constraint firstItem="6dI-f5-1x2" firstAttribute="leading" secondItem="g2R-uw-wg6" secondAttribute="trailing" constant="10" id="7eK-Lk-QE5"/>
                         <constraint firstItem="sR2-lo-g8U" firstAttribute="top" secondItem="iGM-pe-bhN" secondAttribute="bottom" constant="3" id="BFd-bF-KGU"/>
+                        <constraint firstItem="5xY-k7-iVI" firstAttribute="leading" secondItem="c6s-Pv-exP" secondAttribute="trailing" constant="12" id="Bgk-up-Wxv"/>
                         <constraint firstAttribute="trailing" secondItem="sR2-lo-g8U" secondAttribute="trailing" constant="5" id="C8S-pj-7kL"/>
+                        <constraint firstAttribute="bottom" secondItem="c6s-Pv-exP" secondAttribute="bottom" constant="11" id="DHD-rB-YS7"/>
+                        <constraint firstItem="c6s-Pv-exP" firstAttribute="leading" secondItem="udE-9S-m7E" secondAttribute="trailing" constant="14" id="INz-bl-5fw"/>
                         <constraint firstItem="0dW-vp-h3E" firstAttribute="leading" secondItem="49" secondAttribute="leading" id="IWy-HE-LSV"/>
                         <constraint firstAttribute="bottom" secondItem="6dI-f5-1x2" secondAttribute="bottom" constant="10" id="JiM-Ja-GUh"/>
                         <constraint firstAttribute="bottom" secondItem="sR2-lo-g8U" secondAttribute="bottom" constant="4" id="KG4-9a-fvz"/>
                         <constraint firstAttribute="bottom" secondItem="69" secondAttribute="bottom" constant="7" id="PUH-tu-CWZ"/>
                         <constraint firstAttribute="bottom" secondItem="WMt-Ow-2uA" secondAttribute="bottom" constant="5" id="R3P-ar-POc"/>
-                        <constraint firstItem="69" firstAttribute="leading" secondItem="5xY-k7-iVI" secondAttribute="trailing" constant="15" id="RLe-wq-OWB"/>
                         <constraint firstItem="udE-9S-m7E" firstAttribute="leading" secondItem="49" secondAttribute="leading" constant="15" id="SKD-Os-Y4K"/>
                         <constraint firstItem="iGM-pe-bhN" firstAttribute="leading" secondItem="49" secondAttribute="leading" id="Tod-LK-jtL"/>
                         <constraint firstAttribute="bottom" secondItem="udE-9S-m7E" secondAttribute="bottom" constant="11" id="VnN-r0-c1x"/>
-                        <constraint firstItem="sR2-lo-g8U" firstAttribute="leading" secondItem="6dI-f5-1x2" secondAttribute="trailing" constant="20" id="XTG-oj-88r"/>
+                        <constraint firstItem="sR2-lo-g8U" firstAttribute="leading" secondItem="6dI-f5-1x2" secondAttribute="trailing" constant="15" id="XTG-oj-88r"/>
                         <constraint firstItem="Kge-o4-GJe" firstAttribute="leading" secondItem="49" secondAttribute="leading" id="Xa9-jE-5Kf"/>
                         <constraint firstItem="iGM-pe-bhN" firstAttribute="top" secondItem="0dW-vp-h3E" secondAttribute="bottom" constant="6" id="XeJ-UD-XLd"/>
                         <constraint firstAttribute="bottom" secondItem="g2R-uw-wg6" secondAttribute="bottom" constant="10" id="b7c-zq-KHG"/>
                         <constraint firstItem="sR2-lo-g8U" firstAttribute="top" secondItem="Kge-o4-GJe" secondAttribute="bottom" constant="10" id="bU4-c4-2Z2"/>
                         <constraint firstAttribute="trailing" secondItem="Kge-o4-GJe" secondAttribute="trailing" id="dwr-Fv-W1o"/>
                         <constraint firstAttribute="trailing" secondItem="0dW-vp-h3E" secondAttribute="trailing" id="f9D-Wf-jmQ"/>
+                        <constraint firstAttribute="bottom" secondItem="3gf-gU-Igu" secondAttribute="bottom" constant="10" id="f9c-nY-XB0"/>
                         <constraint firstItem="62" firstAttribute="top" secondItem="49" secondAttribute="top" id="fco-PO-pbF"/>
                         <constraint firstAttribute="trailing" secondItem="iGM-pe-bhN" secondAttribute="trailing" id="gNx-9F-pfX"/>
                         <constraint firstAttribute="bottom" secondItem="62" secondAttribute="bottom" constant="60" id="hDA-GO-pwC"/>
                         <constraint firstItem="sR2-lo-g8U" firstAttribute="leading" secondItem="WMt-Ow-2uA" secondAttribute="trailing" constant="5" id="jod-QZ-AVl"/>
                         <constraint firstAttribute="trailing" secondItem="62" secondAttribute="trailing" id="k9V-XB-riM"/>
                         <constraint firstItem="62" firstAttribute="leading" secondItem="49" secondAttribute="leading" id="oJC-Ae-14P"/>
-                        <constraint firstItem="5xY-k7-iVI" firstAttribute="leading" secondItem="udE-9S-m7E" secondAttribute="trailing" constant="15" id="w5R-kF-4ta"/>
+                        <constraint firstItem="g2R-uw-wg6" firstAttribute="leading" secondItem="3gf-gU-Igu" secondAttribute="trailing" constant="28" id="ttI-0Q-4UC"/>
+                        <constraint firstItem="69" firstAttribute="leading" secondItem="5xY-k7-iVI" secondAttribute="trailing" constant="15" id="zF2-c8-zfN"/>
                     </constraints>
                 </view>
             </subviews>
@@ -273,6 +296,7 @@
         </view>
     </objects>
     <resources>
+        <image name="gif.png" width="169" height="124.5"/>
         <image name="photogallery.png" width="254.25" height="254.25"/>
         <image name="redface.png" width="500" height="500"/>
         <image name="undo-redo.png" width="200" height="200"/>

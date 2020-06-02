@@ -128,7 +128,7 @@
 			<key>Key</key>
 			<string>text_URL</string>
 			<key>DefaultValue</key>
-			<string>http://www.inappsettingskit.com</string>
+			<string>https://github.com/futuretap/InAppSettingsKit</string>
 			<key>IsSecure</key>
 			<false/>
 			<key>KeyboardType</key>
@@ -265,6 +265,30 @@
 			<false/>
 			<key>IASKAdjustsFontSizeToFitWidth</key>
 			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Name</string>
+			<key>Key</key>
+			<string>text_content_type_name</string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>IASKTextContentType</key>
+			<string>Name</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Email</string>
+			<key>Key</key>
+			<string>text_content_type_email</string>
+			<key>IASKTextContentType</key>
+			<string>EmailAddress</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
 		</dict>
 		<dict>
 			<key>Type</key>

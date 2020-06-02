@@ -26,17 +26,20 @@
 #import "RehostCollectionCell.h"
 #import "SmileyCache.h"
 
+//@import GiphyUISDK;
+//@import GiphyCoreSDK;
+
 @implementation AddMessageViewController
 @synthesize delegate, textView, arrayInputData, formSubmit, accessoryView, smileView;
 @synthesize request, loadingView, requestSmile, dicCommonSmileys;
 @synthesize lastSelectedRange, loaded;//navBar,
 @synthesize segmentControler, isDragging, textFieldSmileys, smileyArray, segmentControlerPage, smileyPage, commonTableView, usedSearchDict, usedSearchSortedArray;
-@synthesize btnToolbarImage, btnToolbarSmiley, btnToolbarUndo, btnToolbarRedo;
-@synthesize rehostTableView, rehostImagesArray, rehostImagesSortedArray, collectionImages, collectionSmileysDefault;
+@synthesize btnToolbarImage, btnToolbarGIF, btnToolbarSmiley, btnToolbarUndo, btnToolbarRedo;
+@synthesize rehostTableView, rehostImagesArray, rehostImagesSortedArray, collectionImages, collectionSmileys;
 @synthesize haveTitle, textFieldTitle;
 @synthesize haveTo, textFieldTo;
 @synthesize haveCategory, textFieldCat;
-@synthesize offsetY, smileyCustom;
+@synthesize offsetY, smileyCustom, bSearchSmileysAvailable, bSearchSmileysActivated;
 @synthesize selectCompte, selectedCompte;
 @synthesize popover = _popover, refreshAnchor, statusMessage;
 
@@ -75,7 +78,9 @@
         self.sBrouillon = [[NSUserDefaults standardUserDefaults] stringForKey:@"brouillon"];
         if (self.sBrouillon == nil) self.sBrouillon = [[NSString alloc] init];
         self.sBrouillonUtilise = NO;
-        
+        self.bSearchSmileysAvailable = NO;
+        self.bSearchSmileysActivated = NO;
+
         self.title = @"Nouv. message";
     }
     return self;
@@ -578,6 +583,8 @@
     Theme theme = [[ThemeManager sharedManager] theme];
     [self.btnToolbarImage  setImage:[ThemeColors tintImage:[UIImage imageNamed:@"photogallery2"] withTheme:theme] forState:UIControlStateNormal];
     [self.btnToolbarImage setImage:[ThemeColors tintImage:[UIImage imageNamed:@"photogallery2"] withTheme:theme] forState:UIControlStateHighlighted];
+    [self.btnToolbarGIF  setImage:[ThemeColors tintImage:[UIImage imageNamed:@"gif"] withTheme:theme] forState:UIControlStateNormal];
+    [self.btnToolbarGIF setImage:[ThemeColors tintImage:[UIImage imageNamed:@"gif"] withTheme:theme] forState:UIControlStateHighlighted];
     [self.btnToolbarSmiley setImage:[ThemeColors tintImage:[UIImage imageNamed:@"redface"] withTheme:theme] forState:UIControlStateNormal];
     [self.btnToolbarSmiley setImage:[ThemeColors tintImage:[UIImage imageNamed:@"redface"] withTheme:theme] forState:UIControlStateHighlighted];
     [self.btnToolbarUndo setImage:[ThemeColors tintImage:[UIImage imageNamed:@"undo-redo"] withTheme:theme] forState:UIControlStateNormal];
@@ -586,6 +593,7 @@
     [self.btnToolbarRedo setImage:[ThemeColors tintImage:[UIImage imageNamed:@"undo"] withTheme:theme] forState:UIControlStateHighlighted];
 
     [self.btnToolbarImage addTarget:self action:@selector(actionImage:) forControlEvents:UIControlEventTouchUpInside];
+    [self.btnToolbarGIF addTarget:self action:@selector(actionGIF:) forControlEvents:UIControlEventTouchUpInside];
     [self.btnToolbarSmiley addTarget:self action:@selector(actionSmiley:) forControlEvents:UIControlEventTouchUpInside];
     [self.btnToolbarUndo addTarget:self action:@selector(actionUndo:) forControlEvents:UIControlEventTouchUpInside];
     [self.btnToolbarRedo addTarget:self action:@selector(actionRedo:) forControlEvents:UIControlEventTouchUpInside];
@@ -703,6 +711,7 @@
         
         //[self.segmentControler setAlpha:1];
         [self.btnToolbarImage setHidden:NO];
+        [self.btnToolbarGIF setHidden:NO];
         [self.btnToolbarSmiley setHidden:NO];
         [self.btnToolbarUndo setHidden:NO];
         [self.btnToolbarRedo setHidden:NO];
@@ -723,6 +732,7 @@
         
         //[self.segmentControler setAlpha:1];
         [self.btnToolbarImage setHidden:NO];
+        [self.btnToolbarGIF setHidden:NO];
         [self.btnToolbarSmiley setHidden:NO];
         [self.btnToolbarUndo setHidden:NO];
         [self.btnToolbarRedo setHidden:NO];
@@ -743,6 +753,7 @@
         
         //[self.segmentControler setAlpha:1];
         [self.btnToolbarImage setHidden:NO];
+        [self.btnToolbarGIF setHidden:NO];
         [self.btnToolbarSmiley setHidden:NO];
         [self.btnToolbarUndo setHidden:NO];
         [self.btnToolbarRedo setHidden:NO];
@@ -1019,13 +1030,39 @@
      */
 }
 
+- (void)actionGIF:(id)sender
+{
+    /*
+    GiphyViewController *giphy = [[GiphyViewController alloc]init ] ;
+    giphy.layout = GPHGridLayoutWaterfall;
+    giphy.theme = GPHThemeLight;
+    giphy.rating = GPHRatingTypeRatedPG13;
+    giphy.delegate = self;
+    giphy.showConfirmationScreen = true ;
+    [giphy setMediaConfigWithTypes: [ [NSMutableArray alloc] initWithObjects:
+                                     @(GPHContentTypeGifs),@(GPHContentTypeStickers), @(GPHContentTypeText),@(GPHContentTypeEmoji), nil] ];
+    [self presentViewController:giphy animated:true completion:nil];*/
+}
+
 - (void)actionSmiley:(id)sender
 {
-    if ([self.collectionSmileysDefault isHidden]) {
-        [self.collectionSmileysDefault setHidden:NO];
+    if ([self.collectionSmileys isHidden]) {
+        [self.collectionSmileys reloadData];
+        [self.collectionSmileys setHidden:NO];
     }
     else {
-        [self.collectionSmileysDefault setHidden:YES];
+        if (!self.bSearchSmileysAvailable) {
+            [self.collectionSmileys setHidden:YES];
+        }
+        else { // Search smiley available
+            if (self.bSearchSmileysActivated) {
+                self.bSearchSmileysActivated = NO;
+                [self.collectionSmileys reloadData];
+            }
+            else {
+                [self.collectionSmileys setHidden:YES];
+            }
+        }
     }
 /*
     if (self.smileView.alpha == 0.0) {
@@ -1133,6 +1170,7 @@
                     [self.smileView setAlpha:1];
                     //[self.segmentControler setAlpha:0];
                     [self.btnToolbarImage setHidden:YES];
+                    [self.btnToolbarGIF setHidden:YES];
                     [self.btnToolbarSmiley setHidden:YES];
                     [self.btnToolbarUndo setHidden:YES];
                     [self.btnToolbarRedo setHidden:YES];
@@ -1173,6 +1211,7 @@
                     
                     //[self.segmentControler setAlpha:0];
                     [self.btnToolbarImage setHidden:YES];
+                    [self.btnToolbarGIF setHidden:YES];
                     [self.btnToolbarSmiley setHidden:YES];
                     [self.btnToolbarUndo setHidden:YES];
                     [self.btnToolbarRedo setHidden:YES];
@@ -1462,6 +1501,7 @@
         //[segmentControler setEnabled:NO forSegmentAtIndex:0];
         //[segmentControler setEnabled:NO forSegmentAtIndex:1];
         [self.btnToolbarImage setEnabled:NO];
+        [self.btnToolbarGIF setEnabled:NO];
         [self.btnToolbarSmiley setEnabled:NO];
         [self.btnToolbarUndo setEnabled:NO];
         [self.btnToolbarRedo setEnabled:NO];
@@ -1476,6 +1516,7 @@
         
         //[self.segmentControler setAlpha:1];
         [self.btnToolbarImage setHidden:NO];
+        [self.btnToolbarGIF setHidden:NO];
         [self.btnToolbarSmiley setHidden:NO];
         [self.btnToolbarUndo setHidden:NO];
         [self.btnToolbarRedo setHidden:NO];
@@ -1512,6 +1553,7 @@
     //[segmentControler setEnabled:YES forSegmentAtIndex:0];
     //[segmentControler setEnabled:YES forSegmentAtIndex:1];
     [self.btnToolbarImage setEnabled:YES];
+    [self.btnToolbarGIF setEnabled:YES];
     [self.btnToolbarSmiley setEnabled:YES];
     [self.btnToolbarUndo setEnabled:YES];
     [self.btnToolbarRedo setEnabled:YES];
@@ -1650,28 +1692,31 @@
 
 - (void)fetchSmileys
 {
-    //NSLog(@"fetchSmileys");
-    
-    
-    [ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
-    
-    NSString *newString = [NSString stringWithFormat:@"+%@", [[self.textFieldSmileys.text componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsJoinedByString:@" +"]];
-    NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                                     NULL,
-                                                                                                     (CFStringRef)newString,
-                                                                                                     NULL,
-                                                                                                     (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                                     kCFStringEncodingUTF8 ));
-    
-    [self setRequestSmile:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@", [k ForumURL], encodedString]]]];
-    [requestSmile setDelegate:self];
-    
-    [requestSmile setDidStartSelector:@selector(fetchSmileContentStarted:)];
-    [requestSmile setDidFinishSelector:@selector(fetchSmileContentComplete:)];
-    [requestSmile setDidFailSelector:@selector(fetchSmileContentFailed:)];
-    
-    //[self.smileView evaluateJavaScript:@"$('#container').hide();$('#container_ajax').show();$('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Recherche en cours...</div>');" completionHandler:nil];
-    [requestSmile startAsynchronous];
+    NSString *sTextSmileys = [NSString stringWithFormat:@"+%@", [[self.textFieldSmileys.text componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsJoinedByString:@" +"]];
+    NSMutableArray* smileyList = [[SmileyCache shared] getSmileyListForText:sTextSmileys];
+    if (smileyList) {
+        self.smileyArray = smileyList;
+        [self performSelectorInBackground:@selector(loadSmileys) withObject:nil];
+    }
+    else {
+        [ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
+        NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                         NULL,
+                                                                                                         (CFStringRef)sTextSmileys,
+                                                                                                         NULL,
+                                                                                                         (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                         kCFStringEncodingUTF8 ));
+        
+        [self setRequestSmile:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@", [k ForumURL], encodedString]]]];
+        [requestSmile setDelegate:self];
+        
+        [requestSmile setDidStartSelector:@selector(fetchSmileContentStarted:)];
+        [requestSmile setDidFinishSelector:@selector(fetchSmileContentComplete:)];
+        [requestSmile setDidFailSelector:@selector(fetchSmileContentFailed:)];
+        
+        //[self.smileView evaluateJavaScript:@"$('#container').hide();$('#container_ajax').show();$('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Recherche en cours...</div>');" completionHandler:nil];
+        [requestSmile startAsynchronous];
+    }
 }
 
 - (void)fetchSmileContentStarted:(ASIHTTPRequest *)theRequest
@@ -1708,8 +1753,9 @@
         return;
     }
     
-    //[self.collectionSmileysDefault reloadData];
-     
+    //[self.collectionSmileys reloadData];
+    self.bSearchSmileysAvailable = YES;
+    self.bSearchSmileysActivated = YES;
     [self loadSmileys:0];
     //[self loadSmileys:smileyPage];
     
@@ -1742,7 +1788,7 @@
 {
     @autoreleasepool {
         
-        [[SmileyCache shared] handleSmileyArray:self.smileyArray forCollection:self.collectionSmileysDefault];
+        [[SmileyCache shared] handleSmileyArray:self.smileyArray forCollection:self.collectionSmileys];
         /*
         int page = self.smileyPage;
         
@@ -1834,10 +1880,11 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             //[self.segmentControler setAlpha:0];
             [self.btnToolbarImage setHidden:NO];
+            [self.btnToolbarGIF setHidden:NO];
             [self.btnToolbarSmiley setHidden:NO];
             [self.btnToolbarUndo setHidden:NO];
             [self.btnToolbarRedo setHidden:NO];
-            [self.collectionSmileysDefault setHidden:NO];
+            [self.collectionSmileys setHidden:NO];
 /*
             [self.segmentControlerPage setAlpha:1];
 
@@ -2020,19 +2067,23 @@
 }
 #pragma mark - Collection Smileys Default and Images
 
+static CGFloat fCellSize = 0.7;
+static CGFloat fCellImageSize = 1;
+
+
 - (void) setupCollections
 {
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"commonsmile" ofType:@"plist"];
     self.dicCommonSmileys = [NSMutableArray arrayWithContentsOfFile:plistPath];
 
     // Collection Smileys defaults
-    [self.collectionSmileysDefault setHidden:YES];
-    self.collectionSmileysDefault.backgroundColor = UIColor.clearColor;
+    [self.collectionSmileys setHidden:YES];
+    self.collectionSmileys.backgroundColor = UIColor.clearColor;
 
-    [self.collectionSmileysDefault registerClass:[RehostCollectionCell class] forCellWithReuseIdentifier:@"RehostCollectionCellId"];
+    [self.collectionSmileys registerClass:[RehostCollectionCell class] forCellWithReuseIdentifier:@"RehostCollectionCellId"];
 
-    [self.collectionSmileysDefault  setDataSource:self];
-    [self.collectionSmileysDefault  setDelegate:self];
+    [self.collectionSmileys  setDataSource:self];
+    [self.collectionSmileys  setDelegate:self];
 
     // Collection Image
     [self.collectionImages setHidden:YES];
@@ -2049,7 +2100,7 @@
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     RehostCollectionCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RehostCollectionCellId" forIndexPath:indexPath];
-    if (collectionView == self.collectionSmileysDefault) {
+    if (collectionView == self.collectionSmileys) {
         /*
          // Default smileys
         NSMutableDictionary* dic = self.dicCommonSmileys[indexPath.row];
@@ -2083,21 +2134,20 @@
 
         CGFloat ch = cell.bounds.size.height;
         CGFloat cw = cell.bounds.size.width;
-        CGFloat w = image.size.width;
-        CGFloat h = image.size.height;
+        CGFloat w = image.size.width*fCellImageSize;
+        CGFloat h = image.size.height*fCellImageSize;
         
         if (cell.previewImage == nil) {
             cell.previewImage = [[UIImageView alloc] initWithFrame:CGRectMake(cw/2-w/2, ch/2-h/2, w, h)];
             [cell addSubview:cell.previewImage];
         }
-        
+        else {
+            cell.previewImage.frame = CGRectMake(cw/2-w/2, ch/2-h/2, w, h);
+        }
         cell.previewImage.clipsToBounds = NO;
-        //cell.previewImage.layer.borderColor = [ThemeColors loveColor].CGColor;
-        //cell.previewImage.layer.borderWidth = 1.0f;
-        //cell.previewImage.layer.cornerRadius = 5;
         cell.previewImage.layer.masksToBounds = true;
 
-        cell.layer.borderColor = [ThemeColors headSectionTextColor].CGColor;
+        cell.layer.borderColor = [ThemeColors cellBorderColor].CGColor;
         cell.layer.backgroundColor = [UIColor whiteColor].CGColor;
         cell.layer.borderWidth = 1.0f;
         cell.layer.cornerRadius = 5;
@@ -2168,7 +2218,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (collectionView == self.collectionSmileysDefault) {
+    if (collectionView == self.collectionSmileys) {
         return self.smileyArray.count;
         /*if (self.smileyArray.count > 0) { // default smileys
             return self.smileyArray.count;
@@ -2189,8 +2239,8 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (collectionView == self.collectionSmileysDefault) {
-        
+    if (collectionView == self.collectionSmileys) {
+        /*
         UIImage* image = [[SmileyCache shared] getImageForIndex:(int)indexPath.row];
         if (image == nil) {
             NSLog(@"IMAGE for %d", (int)indexPath.row);
@@ -2201,9 +2251,9 @@
         }
 
         CGFloat w = MAX(MIN(70,image.size.width), 50);
-
+         */
         //return CGSizeMake(w, 50);
-        return CGSizeMake(70, 50);
+        return CGSizeMake(70*fCellSize, 50*fCellSize);
     }
     else {
         return CGSizeMake(60, 60);
@@ -2212,8 +2262,8 @@
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    if (collectionView == self.collectionSmileysDefault) {
-        return UIEdgeInsetsMake(20, 0, 0, 0);
+    if (collectionView == self.collectionSmileys) {
+        return UIEdgeInsetsMake(2, 2, 0, 0);
     }
     else {
         return UIEdgeInsetsMake(0, 2, 0, 0);
@@ -2222,7 +2272,7 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
-    if (collectionView == self.collectionSmileysDefault) {
+    if (collectionView == self.collectionSmileys) {
         return 1.0;
     }
     else {

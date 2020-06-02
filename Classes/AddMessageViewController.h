@@ -96,19 +96,24 @@
 @property (nonatomic, strong) NSString *smileyCustom;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnToolbarImage;
+@property (strong, nonatomic) IBOutlet UIButton *btnToolbarGIF;
 @property (weak, nonatomic) IBOutlet UIButton *btnToolbarSmiley;
 @property (weak, nonatomic) IBOutlet UIButton *btnToolbarUndo;
 @property (nonatomic, strong) IBOutlet UISegmentedControl *segmentControler;
 @property (weak, nonatomic) IBOutlet UIButton *btnToolbarRedo;
 @property (nonatomic, strong) IBOutlet UISegmentedControl *segmentControlerPage;
 @property (nonatomic, strong) IBOutlet UITextField *textFieldSmileys;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinnerSmileys;
 @property (nonatomic, strong) NSMutableArray *smileyArray;
 @property int smileyPage;
 @property (nonatomic, strong) IBOutlet UITableView *commonTableView;
 @property (nonatomic, strong) NSMutableDictionary *usedSearchDict;
 @property (nonatomic, strong) NSMutableArray *usedSearchSortedArray;
 @property (nonatomic, strong) IBOutlet UICollectionView *collectionImages;
-@property (strong, nonatomic) IBOutlet UICollectionView *collectionSmileysDefault;
+@property (strong, nonatomic) IBOutlet UICollectionView *collectionSmileys;
+@property BOOL bSearchSmileysAvailable;
+@property BOOL bSearchSmileysActivated;
+
 
 @property (nonatomic, strong) IBOutlet UITableView *rehostTableView;
 @property (nonatomic, strong) NSMutableArray *rehostImagesArray;
